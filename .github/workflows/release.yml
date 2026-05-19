@@ -23,8 +23,9 @@ jobs:
       - name: Install create-dmg
         run: brew install create-dmg
 
+      # Secrets cannot be used in `if:`; continue when signing secrets are not configured.
       - name: Import code signing certificate
-        if: secrets.APPLE_CERTIFICATE_BASE64 != ''
+        continue-on-error: true
         uses: apple-actions/import-codesign-certs@v3
         with:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATE_BASE64 }}
